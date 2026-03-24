@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:CollectionManager.Models"
+             x:Class="CollectionManager.Views.CollectionsPage"
+             Title="System zarządzania kolekcjonerstwem">
+
+    <Grid Padding="16" RowDefinitions="Auto,Auto,Auto,*" RowSpacing="10">
+        <Label Text="Twoje kolekcje"
+               FontSize="26"
+               FontAttributes="Bold"
+               TextColor="{StaticResource SecondaryColor}" />
+
+        <Label Grid.Row="1"
+               x:Name="DebugPathLabel"
+               IsVisible="False"
+               FontSize="12"
+               TextColor="{StaticResource AccentColor}" />
+
+        <Grid Grid.Row="2" ColumnDefinitions="*,Auto" ColumnSpacing="10">
+            <Entry x:Name="CollectionNameEntry" Placeholder="Nazwa nowej kolekcji" />
+            <Button Grid.Column="1" Text="Dodaj" Clicked="OnAddCollectionClicked" />
+        </Grid>
+
+        <CollectionView Grid.Row="3"
+                        x:Name="CollectionsView"
+                        SelectionMode="Single"
+                        SelectionChanged="OnCollectionSelected">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="12" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:CollectionModel">
+                    <Frame Padding="12" Margin="0,2" BorderColor="{StaticResource PrimaryColor}">
+                        <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                            <Label Text="{Binding Name}" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource TextPrimary}" />
+                            <Button Grid.Column="1" Text="Usuń" BackgroundColor="{StaticResource SecondaryColor}" Clicked="OnDeleteCollectionClicked" CommandParameter="{Binding .}" />
+                            <Label Grid.Row="1" Text="{Binding Description}" TextColor="{StaticResource TextSecondary}" FontSize="13" />
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+
+</ContentPage>

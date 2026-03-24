@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:CollectionManager.Models"
+             x:Class="CollectionManager.Views.CollectionDetailsPage"
+             Title="Szczegóły kolekcji">
+
+    <Grid Padding="14" RowDefinitions="Auto,Auto,Auto,Auto,*" RowSpacing="8">
+        <Label x:Name="CollectionTitleLabel" FontSize="24" FontAttributes="Bold" TextColor="{StaticResource SecondaryColor}" />
+
+        <Frame Grid.Row="1" BorderColor="{StaticResource PrimaryColor}" Padding="10">
+            <VerticalStackLayout Spacing="4">
+                <Label x:Name="TotalCountLabel" FontSize="15" />
+                <Label x:Name="SoldCountLabel" FontSize="15" />
+                <Label x:Name="WantToSellCountLabel" FontSize="15" />
+            </VerticalStackLayout>
+        </Frame>
+
+        <Grid Grid.Row="2" ColumnDefinitions="*,*,*" ColumnSpacing="8">
+            <Button Text="Dodaj element" Clicked="OnAddItemClicked" />
+            <Button Grid.Column="1" Text="Dodaj kolumnę" BackgroundColor="{StaticResource AccentColor}" Clicked="OnAddFieldClicked" />
+            <Button Grid.Column="2" Text="Eksport/Import" BackgroundColor="#6F4E7C" Clicked="OnImportExportClicked" />
+        </Grid>
+
+        <Label Grid.Row="3" x:Name="ColumnsLabel" FontSize="12" TextColor="{StaticResource TextSecondary}" />
+
+        <CollectionView Grid.Row="4" x:Name="ItemsCollectionView" SelectionMode="Single" SelectionChanged="OnItemSelected">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.EmptyView>
+                <Label Text="Brak elementów w tej kolekcji" HorizontalOptions="Center" VerticalOptions="Center" TextColor="#667" />
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:CollectionItem">
+                    <Frame Padding="10" Margin="0,2" BorderColor="{StaticResource PrimaryColor}">
+                        <Frame.Triggers>
+                            <DataTrigger TargetType="Frame" Binding="{Binding IsSold}" Value="True">
+                                <Setter Property="BackgroundColor" Value="{StaticResource SoldItemColor}" />
+                            </DataTrigger>
+                        </Frame.Triggers>
+
+                        <Grid ColumnDefinitions="80,*,Auto" RowDefinitions="Auto,Auto,Auto,Auto" ColumnSpacing="8" RowSpacing="2">
+                            <Image Grid.RowSpan="4" WidthRequest="70" HeightRequest="70" Aspect="AspectFill" Source="{Binding ImagePath}" />
+
+                            <Label Grid.Column="1" Text="{Binding Name}" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource TextPrimary}">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label" Binding="{Binding IsSold}" Value="True">
+                                        <Setter Property="TextDecorations" Value="Strikethrough" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                            <Label Grid.Column="2" Text="{Binding Price, StringFormat='{}{0:C2}'}" FontSize="15" TextColor="{StaticResource AccentColor}" HorizontalTextAlignment="End" />
+
+                            <Label Grid.Row="1" Grid.Column="1" Text="{Binding StatusDisplay}" TextColor="{StaticResource TextSecondary}" />
+                            <Label Grid.Row="1" Grid.Column="2" Text="{Binding Rating, StringFormat='Ocena: {0}/10'}" TextColor="{StaticResource TextSecondary}" HorizontalTextAlignment="End" />
+
+                            <Label Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Comment}" FontSize="12" TextColor="{StaticResource TextSecondary}" LineBreakMode="TailTruncation" MaxLines="2" />
+
+                            <Grid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" ColumnDefinitions="Auto,Auto" ColumnSpacing="8">
+                                <Button Text="Edytuj" Clicked="OnEditItemClicked" CommandParameter="{Binding .}" />
+                                <Button Grid.Column="1" Text="Usuń" BackgroundColor="{StaticResource SecondaryColor}" Clicked="OnDeleteItemClicked" CommandParameter="{Binding .}" />
+                            </Grid>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+
+</ContentPage>

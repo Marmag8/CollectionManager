@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CollectionManager.Views.ItemEditPage"
+             Title="Edycja elementu">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="10">
+            <Label x:Name="HeaderLabel" FontSize="24" FontAttributes="Bold" TextColor="{StaticResource SecondaryColor}" />
+
+            <Entry x:Name="NameEntry" Placeholder="Nazwa" />
+            <Entry x:Name="PriceEntry" Placeholder="Cena" Keyboard="Numeric" />
+
+            <Picker x:Name="StatusPicker" Title="Status" />
+
+            <Stepper x:Name="RatingStepper" Minimum="1" Maximum="10" Increment="1" ValueChanged="OnRatingChanged" />
+            <Label x:Name="RatingLabel" Text="Ocena: 5/10" TextColor="{StaticResource TextSecondary}" />
+
+            <Editor x:Name="CommentEditor" Placeholder="Komentarz" AutoSize="TextChanges" MinimumHeightRequest="80" />
+
+            <Label Text="Grafika elementu" FontAttributes="Bold" TextColor="{StaticResource TextPrimary}" />
+            <Entry x:Name="ImagePathEntry" Placeholder="Ścieżka do grafiki" />
+            <Button Text="Wybierz grafikę" BackgroundColor="#4E937A" Clicked="OnPickImageClicked" />
+            <Image x:Name="PreviewImage" HeightRequest="120" Aspect="AspectFit" />
+
+            <Label Text="Własne kolumny" FontAttributes="Bold" TextColor="{StaticResource TextPrimary}" />
+            <VerticalStackLayout x:Name="CustomFieldsContainer" Spacing="8" />
+
+            <Button Text="Zapisz" Clicked="OnSaveClicked" />
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

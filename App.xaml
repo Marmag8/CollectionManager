@@ -1,0 +1,56 @@
+﻿<?xml version = "1.0" encoding = "UTF-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:CollectionManager"
+             x:Class="CollectionManager.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <Color x:Key="PrimaryColor">#6C8FB8</Color>
+            <Color x:Key="SecondaryColor">#9E667A</Color>
+            <Color x:Key="AccentColor">#C79A57</Color>
+            <Color x:Key="SurfaceColor">#2A3140</Color>
+            <Color x:Key="CardColor">#3A4356</Color>
+            <Color x:Key="InputColor">#CCCCCC</Color>
+            <Color x:Key="TextPrimary">#FFFFFF</Color>
+            <Color x:Key="TextSecondary">#E6ECF4</Color>
+            <Color x:Key="SoldItemColor">#A9B2BE</Color>
+
+            <Style TargetType="ContentPage">
+                <Setter Property="BackgroundColor" Value="{StaticResource SurfaceColor}" />
+            </Style>
+
+            <Style TargetType="Button">
+                <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}" />
+                <Setter Property="TextColor" Value="#F3F6FA" />
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="Padding" Value="12,8" />
+                <Setter Property="Margin" Value="0,4" />
+            </Style>
+
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+            </Style>
+
+            <Style TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="{StaticResource CardColor}" />
+            </Style>
+
+            <Style TargetType="Entry">
+                <Setter Property="BackgroundColor" Value="{StaticResource InputColor}" />
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="PlaceholderColor" Value="Black" />
+            </Style>
+
+            <Style TargetType="Picker">
+                <Setter Property="BackgroundColor" Value="{StaticResource InputColor}" />
+                <Setter Property="TextColor" Value="Black" />
+            </Style>
+
+            <Style TargetType="Editor">
+                <Setter Property="BackgroundColor" Value="{StaticResource InputColor}" />
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="PlaceholderColor" Value="Black" />
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
