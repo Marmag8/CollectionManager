@@ -7,6 +7,7 @@ namespace CollectionManager.Services;
 public class Utils
 {
     private const string FileName = "collections.txt";
+    private const string DefaultCharizardImage = "charizard_default.png";
 
     public ObservableCollection<CollectionModel> Collections { get; } = [];
 
@@ -512,9 +513,10 @@ public class Utils
             Status = CollectionStatus.New,
             Rating = 10,
             Comment = "Ulubiona karta",
-            ImagePath = "charizard_default.svg",
+            ImagePath = DefaultCharizardImage,
             CustomValues = new Dictionary<string, string> { [cardsField.Id] = "Mint" }
         });
+
         cardsCollection.Items.Add(new CollectionItem
         {
             Name = "Blue-Eyes White Dragon",
@@ -600,9 +602,13 @@ public class Utils
 
         foreach (var item in collection.Items)
         {
-            if (string.IsNullOrWhiteSpace(item.ImagePath) && string.Equals(item.Name, "Charizard", StringComparison.OrdinalIgnoreCase))
+            var isCharizard = string.Equals(item.Name, "Charizard", StringComparison.OrdinalIgnoreCase);
+            var hasLegacySvg = string.Equals(item.ImagePath, "charizard_default.svg", StringComparison.OrdinalIgnoreCase);
+            var isMissing = string.IsNullOrWhiteSpace(item.ImagePath);
+
+            if (isCharizard && (isMissing || hasLegacySvg))
             {
-                item.ImagePath = "charizard_default.svg";
+                item.ImagePath = DefaultCharizardImage;
                 changed = true;
             }
         }
