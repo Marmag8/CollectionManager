@@ -7,7 +7,7 @@ namespace CollectionManager.Services;
 public class Utils
 {
     private const string FileName = "collections.txt";
-    private const string DefaultCharizardImage = "charizard_default.png";
+    private const string DefaultCharizardImage = "charizard_default.jpg";
 
     public ObservableCollection<CollectionModel> Collections { get; } = [];
 
@@ -35,7 +35,6 @@ public class Utils
 
         if (!File.Exists(DataFilePath))
         {
-            using var _ = File.Create(DataFilePath);
             CreateDefaultCollections();
             await SaveAsync();
             return;
@@ -604,9 +603,10 @@ public class Utils
         {
             var isCharizard = string.Equals(item.Name, "Charizard", StringComparison.OrdinalIgnoreCase);
             var hasLegacySvg = string.Equals(item.ImagePath, "charizard_default.svg", StringComparison.OrdinalIgnoreCase);
+            var hasLegacyPng = string.Equals(item.ImagePath, "charizard_default.png", StringComparison.OrdinalIgnoreCase);
             var isMissing = string.IsNullOrWhiteSpace(item.ImagePath);
 
-            if (isCharizard && (isMissing || hasLegacySvg))
+            if (isCharizard && (isMissing || hasLegacySvg || hasLegacyPng))
             {
                 item.ImagePath = DefaultCharizardImage;
                 changed = true;
