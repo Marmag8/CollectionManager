@@ -13,7 +13,7 @@ public class CollectionItem : INotifyPropertyChanged
     private string _imagePath = string.Empty;
     private string _customValuesDisplay = string.Empty;
 
-    public string Id { get; set; } = Guid.NewGuid().ToString("D");
+    public string Id { get; set; } = Guid.NewGuid().ToString();
 
     public string Name
     {
