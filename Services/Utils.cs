@@ -29,10 +29,6 @@ public class Utils
     {
         Directory.CreateDirectory(DataDirectory);
 
-#if DEBUG
-        Debug.WriteLine($"[CollectionManager] Data file path: {DataFilePath}");
-#endif
-
         if (!File.Exists(DataFilePath))
         {
             CreateDefaultCollections();
@@ -103,20 +99,22 @@ public class Utils
         return exportPath;
     }
 
-    public async Task<int> ImportAndMergeCollectionAsync(string importFilePath)
+    public async Task<(int AddedCount, int DuplicateNameCount)> ImportAndMergeCollectionAsync(string importFilePath)
     {
         if (!File.Exists(importFilePath))
         {
-            return 0;
+            return (0, 0);
         }
 
         var incoming = await LoadCollectionsFromFileAsync(importFilePath);
         if (incoming.Count == 0)
         {
-            return 0;
+            return (0, 0);
         }
 
-        var mergedCount = 0;
+        var addedCount = 0;
+        var duplicateNameCount = 0;
+
         foreach (var incomingCollection in incoming)
         {
             var existing = Collections.FirstOrDefault(c =>
@@ -127,7 +125,7 @@ public class Utils
             {
                 SortItems(incomingCollection);
                 Collections.Add(incomingCollection);
-                mergedCount += incomingCollection.Items.Count;
+                addedCount += incomingCollection.Items.Count;
                 continue;
             }
 
@@ -141,36 +139,35 @@ public class Utils
 
             foreach (var incomingItem in incomingCollection.Items)
             {
-                var duplicate = existing.Items.FirstOrDefault(i =>
-                    i.Id == incomingItem.Id ||
+                var hasSameName = existing.Items.Any(i =>
                     string.Equals(i.Name, incomingItem.Name, StringComparison.OrdinalIgnoreCase));
 
-                if (duplicate is null)
+                if (hasSameName)
                 {
-                    existing.Items.Add(incomingItem);
-                    mergedCount++;
-                    continue;
+                    duplicateNameCount++;
                 }
 
-                duplicate.Price = incomingItem.Price;
-                duplicate.Status = incomingItem.Status;
-                duplicate.Rating = incomingItem.Rating;
-                duplicate.Comment = incomingItem.Comment;
-                duplicate.ImagePath = incomingItem.ImagePath;
-
-                foreach (var value in incomingItem.CustomValues)
+                var toAdd = new CollectionItem
                 {
-                    duplicate.CustomValues[value.Key] = value.Value;
-                }
+                    Id = Guid.NewGuid().ToString("D"),
+                    Name = incomingItem.Name,
+                    Price = incomingItem.Price,
+                    Status = incomingItem.Status,
+                    Rating = incomingItem.Rating,
+                    Comment = incomingItem.Comment,
+                    ImagePath = incomingItem.ImagePath,
+                    CustomValues = new Dictionary<string, string>(incomingItem.CustomValues)
+                };
 
-                mergedCount++;
+                existing.Items.Add(toAdd);
+                addedCount++;
             }
 
             SortItems(existing);
         }
 
         await SaveAsync();
-        return mergedCount;
+        return (addedCount, duplicateNameCount);
     }
 
     public void SortItems(CollectionModel collection)
@@ -456,7 +453,6 @@ public class Utils
     {
         decoded = string.Empty;
 
-        // Prevent decoding plain readable values like "Mint" that are valid Base64 by coincidence.
         if (!value.Contains('=') && !value.Contains('+') && !value.Contains('/'))
         {
             return false;

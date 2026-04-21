@@ -37,7 +37,8 @@ namespace CollectionManager
 
 #if DEBUG
             var dataDirectory = Utils.GetDataDirectoryPath();
-            Debug.WriteLine($"[CollectionManager] Data directory: {dataDirectory}");
+            Debug.WriteLine($"[CollectionManager] Dane Aplikacji: {dataDirectory}");
+            //Console.WriteLine($"[CollectionManager] Data directory: {dataDirectory}");
 #endif
 
             return builder.Build();

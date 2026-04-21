@@ -4,7 +4,7 @@ namespace CollectionManager.Models;
 
 public class CollectionModel
 {
-    public string Id { get; set; } = Guid.NewGuid().ToString("N");
+    public string Id { get; set; } = Guid.NewGuid().ToString("D");
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
 

@@ -40,8 +40,8 @@
                             </DataTrigger>
                         </Frame.Triggers>
 
-                        <Grid ColumnDefinitions="80,*,Auto" RowDefinitions="Auto,Auto,Auto,Auto" ColumnSpacing="8" RowSpacing="2">
-                            <Image Grid.RowSpan="4" WidthRequest="70" HeightRequest="70" Aspect="AspectFill" Source="{Binding ImagePath}" />
+                        <Grid ColumnDefinitions="80,*,Auto" RowDefinitions="Auto,Auto,Auto,Auto,Auto" ColumnSpacing="8" RowSpacing="2">
+                            <Image Grid.RowSpan="5" WidthRequest="70" HeightRequest="70" Aspect="AspectFill" Source="{Binding ImagePath}" />
 
                             <Label Grid.Column="1" Text="{Binding Name}" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource TextPrimary}">
                                 <Label.Triggers>
@@ -57,7 +57,9 @@
 
                             <Label Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Comment}" FontSize="12" TextColor="{StaticResource TextSecondary}" LineBreakMode="TailTruncation" MaxLines="2" />
 
-                            <Grid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" ColumnDefinitions="Auto,Auto" ColumnSpacing="8">
+                            <Label Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding CustomValuesDisplay}" FontSize="12" TextColor="{StaticResource TextSecondary}" LineBreakMode="TailTruncation" MaxLines="2" />
+
+                            <Grid Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" ColumnDefinitions="Auto,Auto" ColumnSpacing="8">
                                 <Button Text="Edytuj" Clicked="OnEditItemClicked" CommandParameter="{Binding .}" />
                                 <Button Grid.Column="1" Text="Usuń" BackgroundColor="{StaticResource SecondaryColor}" Clicked="OnDeleteItemClicked" CommandParameter="{Binding .}" />
                             </Grid>

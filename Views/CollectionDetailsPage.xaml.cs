@@ -14,6 +14,7 @@ public partial class CollectionDetailsPage : ContentPage
         CollectionTitleLabel.Text = collection.Name;
         ItemsCollectionView.ItemsSource = collection.Items;
         RefreshColumnsLabel();
+        RefreshCustomValuesDisplay();
         RefreshSummary();
     }
 
@@ -77,6 +78,7 @@ public partial class CollectionDetailsPage : ContentPage
         }
 
         RefreshColumnsLabel();
+        RefreshCustomValuesDisplay();
         await _utils.SaveAsync();
     }
 
@@ -100,8 +102,15 @@ public partial class CollectionDetailsPage : ContentPage
                         return;
                     }
 
-                    var merged = await _utils.ImportAndMergeCollectionAsync(path.Trim());
-                    await DisplayAlert("Import", $"Scalono rekordów: {merged}", "OK");
+                    var importResult = await _utils.ImportAndMergeCollectionAsync(path.Trim());
+                    var message = $"Dodano nowych rekordów: {importResult.AddedCount}";
+                    if (importResult.DuplicateNameCount > 0)
+                    {
+                        message += $"\nUwaga: zaimportowano {importResult.DuplicateNameCount} elementów o nazwach już istniejących.";
+                    }
+
+                    await DisplayAlert("Import", message, "OK");
+                    RefreshCustomValuesDisplay();
                     RefreshSummary();
                     break;
                 }
@@ -133,6 +142,7 @@ public partial class CollectionDetailsPage : ContentPage
 
         _collection.Items.Remove(item);
         _utils.SortItems(_collection);
+        RefreshCustomValuesDisplay();
         RefreshSummary();
         await _utils.SaveAsync();
     }
@@ -153,6 +163,7 @@ public partial class CollectionDetailsPage : ContentPage
         base.OnAppearing();
         _utils.SortItems(_collection);
         RefreshColumnsLabel();
+        RefreshCustomValuesDisplay();
         RefreshSummary();
     }
 
@@ -161,5 +172,22 @@ public partial class CollectionDetailsPage : ContentPage
         TotalCountLabel.Text = $"Liczba przedmiotów: {_collection.Items.Count}";
         SoldCountLabel.Text = $"Przedmioty sprzedane: {_collection.Items.Count(i => i.Status == CollectionStatus.Sold)}";
         WantToSellCountLabel.Text = $"Przedmioty do sprzedaży: {_collection.Items.Count(i => i.Status == CollectionStatus.WantToSell || i.Status == CollectionStatus.ForSale)}";
+    }
+
+    private void RefreshCustomValuesDisplay()
+    {
+        foreach (var item in _collection.Items)
+        {
+            var values = _collection.CustomFields
+                .Select(field =>
+                {
+                    item.CustomValues.TryGetValue(field.Id, out var value);
+                    value ??= string.Empty;
+                    return string.IsNullOrWhiteSpace(value) ? null : $"{field.DisplayName}: {value}";
+                })
+                .Where(v => !string.IsNullOrWhiteSpace(v));
+
+            item.CustomValuesDisplay = string.Join(" | ", values!);
+        }
     }
 }

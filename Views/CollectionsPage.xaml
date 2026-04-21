@@ -18,7 +18,10 @@
                TextColor="{StaticResource AccentColor}" />
 
         <Grid Grid.Row="2" ColumnDefinitions="*,Auto" ColumnSpacing="10">
-            <Entry x:Name="CollectionNameEntry" Placeholder="Nazwa nowej kolekcji" />
+            <VerticalStackLayout Grid.Column="0" Spacing="4">
+                <Label Text="Nazwa nowej kolekcji" FontSize="13" TextColor="{StaticResource TextSecondary}" />
+                <Entry x:Name="CollectionNameEntry" Placeholder="Np. Gry planszowe" />
+            </VerticalStackLayout>
             <Button Grid.Column="1" Text="Dodaj" Clicked="OnAddCollectionClicked" />
         </Grid>
 

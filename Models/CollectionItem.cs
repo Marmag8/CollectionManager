@@ -11,8 +11,9 @@ public class CollectionItem : INotifyPropertyChanged
     private int _rating = 5;
     private string _comment = string.Empty;
     private string _imagePath = string.Empty;
+    private string _customValuesDisplay = string.Empty;
 
-    public string Id { get; set; } = Guid.NewGuid().ToString("N");
+    public string Id { get; set; } = Guid.NewGuid().ToString("D");
 
     public string Name
     {
@@ -58,6 +59,12 @@ public class CollectionItem : INotifyPropertyChanged
     }
 
     public Dictionary<string, string> CustomValues { get; set; } = [];
+
+    public string CustomValuesDisplay
+    {
+        get => _customValuesDisplay;
+        set => SetProperty(ref _customValuesDisplay, value);
+    }
 
     public bool IsSold => Status == CollectionStatus.Sold;
 

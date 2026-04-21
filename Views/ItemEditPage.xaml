@@ -8,14 +8,20 @@
         <VerticalStackLayout Padding="16" Spacing="10">
             <Label x:Name="HeaderLabel" FontSize="24" FontAttributes="Bold" TextColor="{StaticResource SecondaryColor}" />
 
-            <Entry x:Name="NameEntry" Placeholder="Nazwa" />
-            <Entry x:Name="PriceEntry" Placeholder="Cena" Keyboard="Numeric" />
+            <Label Text="Nazwa" FontSize="13" TextColor="{StaticResource TextSecondary}" />
+            <Entry x:Name="NameEntry" Placeholder="Np. Charizard" />
 
+            <Label Text="Cena" FontSize="13" TextColor="{StaticResource TextSecondary}" />
+            <Entry x:Name="PriceEntry" Placeholder="Np. 99,99" Keyboard="Numeric" />
+
+            <Label Text="Status" FontSize="13" TextColor="{StaticResource TextSecondary}" />
             <Picker x:Name="StatusPicker" Title="Status" />
 
+            <Label Text="Ocena" FontSize="13" TextColor="{StaticResource TextSecondary}" />
             <Stepper x:Name="RatingStepper" Minimum="1" Maximum="10" Increment="1" ValueChanged="OnRatingChanged" />
             <Label x:Name="RatingLabel" Text="Ocena: 5/10" TextColor="{StaticResource TextSecondary}" />
 
+            <Label Text="Komentarz" FontSize="13" TextColor="{StaticResource TextSecondary}" />
             <Editor x:Name="CommentEditor" Placeholder="Komentarz" AutoSize="TextChanges" MinimumHeightRequest="80" />
 
             <Label Text="Grafika elementu" FontAttributes="Bold" TextColor="{StaticResource TextPrimary}" />
