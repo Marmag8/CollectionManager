@@ -498,7 +498,7 @@ public class Utils
         {
             DisplayName = "Stan karty",
             FieldType = CustomFieldType.Choice,
-            ChoiceOptions = ["Mint", "Near Mint", "Played"]
+            ChoiceOptions = ["Nowa", "Lekko zużyta", "Używana"]
         };
         cardsCollection.CustomFields.Add(cardsField);
         cardsCollection.Items.Add(new CollectionItem
@@ -509,7 +509,7 @@ public class Utils
             Rating = 10,
             Comment = "Ulubiona karta",
             ImagePath = DefaultCharizardImage,
-            CustomValues = new Dictionary<string, string> { [cardsField.Id] = "Mint" }
+            CustomValues = new Dictionary<string, string> { [cardsField.Id] = "Nowa" }
         });
 
         cardsCollection.Items.Add(new CollectionItem
@@ -519,7 +519,7 @@ public class Utils
             Status = CollectionStatus.Used,
             Rating = 8,
             Comment = "W dobrym stanie",
-            CustomValues = new Dictionary<string, string> { [cardsField.Id] = "Near Mint" }
+            CustomValues = new Dictionary<string, string> { [cardsField.Id] = "Lekko zużyta" }
         });
 
         var figurinesCollection = new CollectionModel

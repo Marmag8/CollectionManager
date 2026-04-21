@@ -14,7 +14,6 @@
             <Label Text="Cena" FontSize="13" TextColor="{StaticResource TextSecondary}" />
             <Entry x:Name="PriceEntry" Placeholder="Np. 99,99" Keyboard="Numeric" />
 
-            <Label Text="Status" FontSize="13" TextColor="{StaticResource TextSecondary}" />
             <Picker x:Name="StatusPicker" Title="Status" />
 
             <Label Text="Ocena" FontSize="13" TextColor="{StaticResource TextSecondary}" />
@@ -29,7 +28,7 @@
             <Button Text="Wybierz grafikę" BackgroundColor="#4E937A" Clicked="OnPickImageClicked" />
             <Image x:Name="PreviewImage" HeightRequest="120" Aspect="AspectFit" />
 
-            <Label Text="Własne kolumny" FontAttributes="Bold" TextColor="{StaticResource TextPrimary}" />
+            <Label Text="Własne właściwości" FontAttributes="Bold" TextColor="{StaticResource TextPrimary}" />
             <VerticalStackLayout x:Name="CustomFieldsContainer" Spacing="8" />
 
             <Button Text="Zapisz" Clicked="OnSaveClicked" />

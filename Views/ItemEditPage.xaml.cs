@@ -6,6 +6,7 @@ public partial class ItemEditPage : ContentPage
     private readonly CollectionItem _item;
     private readonly Utils _utils;
     private readonly bool _isNew;
+    private bool _isAdjustingRating;
 
     private readonly Dictionary<string, View> _dynamicInputs = [];
 
@@ -69,7 +70,21 @@ public partial class ItemEditPage : ContentPage
 
     private void OnRatingChanged(object? sender, ValueChangedEventArgs e)
     {
-        RatingLabel.Text = $"Ocena: {(int)e.NewValue}/10";
+        if (_isAdjustingRating)
+        {
+            return;
+        }
+
+        var clamped = Math.Clamp((int)Math.Round(e.NewValue), 1, 10);
+
+        if (Math.Abs(RatingStepper.Value - clamped) > double.Epsilon)
+        {
+            _isAdjustingRating = true;
+            RatingStepper.Value = clamped;
+            _isAdjustingRating = false;
+        }
+
+        RatingLabel.Text = $"Ocena: {clamped}/10";
     }
 
     private async void OnPickImageClicked(object? sender, EventArgs e)

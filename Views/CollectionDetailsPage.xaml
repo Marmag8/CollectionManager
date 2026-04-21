@@ -18,7 +18,7 @@
 
         <Grid Grid.Row="2" ColumnDefinitions="*,*,*" ColumnSpacing="8">
             <Button Text="Dodaj element" Clicked="OnAddItemClicked" />
-            <Button Grid.Column="1" Text="Dodaj kolumnę" BackgroundColor="{StaticResource AccentColor}" Clicked="OnAddFieldClicked" />
+            <Button Grid.Column="1" Text="Dodaj właściwość" BackgroundColor="{StaticResource AccentColor}" Clicked="OnAddFieldClicked" />
             <Button Grid.Column="2" Text="Eksport/Import" BackgroundColor="#6F4E7C" Clicked="OnImportExportClicked" />
         </Grid>
 
@@ -57,7 +57,7 @@
 
                             <Label Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Comment}" FontSize="12" TextColor="{StaticResource TextSecondary}" LineBreakMode="TailTruncation" MaxLines="2" />
 
-                            <Label Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding CustomValuesDisplay}" FontSize="12" TextColor="{StaticResource TextSecondary}" LineBreakMode="TailTruncation" MaxLines="2" />
+                            <Label Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding CustomValuesDisplay}" FontSize="12" TextColor="{StaticResource TextSecondary}" LineBreakMode="WordWrap" MaxLines="4" />
 
                             <Grid Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" ColumnDefinitions="Auto,Auto" ColumnSpacing="8">
                                 <Button Text="Edytuj" Clicked="OnEditItemClicked" CommandParameter="{Binding .}" />

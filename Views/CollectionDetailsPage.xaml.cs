@@ -23,7 +23,7 @@ public partial class CollectionDetailsPage : ContentPage
         var customColumns = _collection.CustomFields.Select(f => f.DisplayName).ToList();
         var baseColumns = new List<string> { "Nazwa", "Cena", "Status", "Ocena", "Komentarz", "Grafika" };
         baseColumns.AddRange(customColumns);
-        ColumnsLabel.Text = $"Kolumny: {string.Join(", ", baseColumns)}";
+        ColumnsLabel.Text = $"Właściwości: {string.Join(", ", baseColumns)}";
     }
 
     private async void OnAddItemClicked(object? sender, EventArgs e)
@@ -35,13 +35,13 @@ public partial class CollectionDetailsPage : ContentPage
 
     private async void OnAddFieldClicked(object? sender, EventArgs e)
     {
-        var displayName = await DisplayPromptAsync("Nowa kolumna", "Podaj nazwę kolumny:", "Dalej", "Anuluj");
+        var displayName = await DisplayPromptAsync("Nowa właściwość", "Podaj nazwę właściwości:", "Dalej", "Anuluj");
         if (string.IsNullOrWhiteSpace(displayName))
         {
             return;
         }
 
-        var fieldTypePick = await DisplayActionSheet("Wybierz typ kolumny", "Anuluj", null, "Tekst", "Liczba", "Wybór z listy");
+        var fieldTypePick = await DisplayActionSheet("Wybierz typ właściwości", "Anuluj", null, "Tekst", "Liczba", "Wybór z listy");
         if (fieldTypePick == "Anuluj" || string.IsNullOrWhiteSpace(fieldTypePick))
         {
             return;
@@ -187,7 +187,7 @@ public partial class CollectionDetailsPage : ContentPage
                 })
                 .Where(v => !string.IsNullOrWhiteSpace(v));
 
-            item.CustomValuesDisplay = string.Join(" | ", values!);
+            item.CustomValuesDisplay = string.Join(Environment.NewLine, values!);
         }
     }
 }
